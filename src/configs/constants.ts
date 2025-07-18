@@ -7,3 +7,9 @@ export const MAX_PAGES_WITH_DEFAULT_PER_PAGE = Math.floor(
 );
 
 export const PER_PAGE_OPTIONS = [10, 25, 50] as const; // Варианты пагинации
+
+export const ERROR_MESSAGES = {
+  RATE_LIMIT: 'Превышен rate limit',
+  REQUEST_FAILED: (status: number) => `Ошибка запроса: ${status}`,
+  UNKNOWN: 'Неизвестная ошибка'
+};
