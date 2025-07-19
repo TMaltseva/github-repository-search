@@ -1,0 +1,29 @@
+@import '../styles/variables';
+
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  padding: $spacing-lg;
+  text-align: center;
+}
+
+.errorAlert {
+  margin-bottom: $spacing-lg;
+  max-width: 600px;
+  width: 100%;
+}
+
+.stackTrace {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+  background-color: $gray-50;
+  padding: $spacing-md;
+  border-radius: $border-radius-md;
+  overflow: auto;
+  max-width: 100%;
+  max-height: 200px;
+  white-space: pre-wrap;
+}
