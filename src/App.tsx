@@ -18,7 +18,7 @@ const App: React.FC = () => {
   return (
     <>
       <SWRConfig value={swrConfig}>
-        <Router>
+        <Router basename="/github-repository-search">
           <Routes>
             {/* Главная страница */}
             <Route path="/" element={<HomePage />} />
