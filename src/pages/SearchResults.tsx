@@ -2,8 +2,8 @@ import React, { useMemo } from 'react';
 import { useSearchParams, Outlet } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 
-// Material-UI компоненты
-import { Container, Box } from '@mui/material';
+// Material-UI компонент Box
+import { Box } from '@mui/material';
 import RepositoryTable from '../components/RepositoryTable';
 import {
   isValidSortOption,
@@ -41,28 +41,26 @@ const SearchResults: React.FC = () => {
   }, [searchParams]);
 
   return (
-    <>
-      {/* Хедер с поиском */}
+    <Box className={styles.pageWrapper}>
+      {/* Хедер */}
       <Box className={styles.searchHeader}>
-        <Container maxWidth="xl" className={styles.searchContainer}>
+        <Box className={styles.searchContainer}>
           <SearchBar placeholder="Введите поисковый запрос" />
-        </Container>
+        </Box>
       </Box>
 
       {/* Основной контент */}
-      <Container maxWidth="xl" className={styles.container}>
-        <Box className={styles.content}>
-          <Box className={styles.tableSection}>
-            <RepositoryTable searchParams={searchOptions} />
-          </Box>
-
-          {/* Outlet для отображения деталей репозитория */}
-          <Box className={styles.detailsSection}>
-            <Outlet />
-          </Box>
+      <Box className={styles.content}>
+        <Box className={styles.tableSection}>
+          <RepositoryTable searchParams={searchOptions} />
         </Box>
-      </Container>
-    </>
+
+        {/* Outlet для отображения деталей репозитория */}
+        <Box className={styles.detailsSection}>
+          <Outlet />
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

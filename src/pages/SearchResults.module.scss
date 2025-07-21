@@ -1,0 +1,99 @@
+@import '../styles/variables';
+
+.pageWrapper {
+  width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.searchHeader {
+  background-color: $header-color;
+  height: 80px;
+  box-shadow: $shadow-sm;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.searchContainer {
+  display: flex;
+  justify-content: flex-start;
+  padding: 0 32px;
+  width: 100%;
+  margin: 0;
+}
+
+.content {
+  display: flex;
+  align-items: flex-start;
+  height: calc(100vh - 80px);
+  gap: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  overflow-x: auto;
+
+  @media (max-width: $breakpoint-md) {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+  }
+}
+
+.tableSection {
+  flex: 1;
+  min-width: 0;
+  background-color: $white;
+  padding: $spacing-lg 0 $spacing-lg $spacing-lg;
+  margin: 0;
+  height: 100%;
+  overflow-y: auto;
+
+  @media (max-width: $breakpoint-md) {
+    padding: $spacing-md;
+    height: auto;
+    overflow-y: visible;
+    width: 100vw;
+  }
+}
+
+.detailsSection {
+  flex: 0 0 400px;
+  background-color: $gray-50;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border-left: 1px solid $gray-200;
+  overflow-y: auto;
+
+  @media (max-width: $breakpoint-md) {
+    width: 100%;
+    height: auto;
+    border-left: none;
+    border-top: 1px solid $gray-200;
+    overflow-y: visible;
+  }
+
+  &:empty {
+    display: block;
+    
+    &::after {
+      content: "Выберите репозиторий";
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 200px;
+      color: $text-secondary;
+      font-size: $font-size-base;
+    }
+  }
+}
