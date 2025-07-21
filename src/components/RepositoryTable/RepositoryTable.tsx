@@ -11,7 +11,7 @@ import {
   Alert,
   SelectChangeEvent
 } from '@mui/material';
-
+import { sortRepositories } from '../../utils/sortRepo';
 import { useSearchRepo } from '../../hooks/useGitHub';
 import TableHeader from './TableHeader';
 import RepositoryRow from './RepositoryRow';
@@ -27,7 +27,7 @@ interface RepositoryTableProps {
 }
 
 /**
- * Компонент таблицы репозиториев
+ * Компонент таблицы репозиториев с клиентской досортировкой
  */
 const RepositoryTable: React.FC<RepositoryTableProps> = ({ searchParams }) => {
   const navigate = useNavigate();
@@ -36,7 +36,22 @@ const RepositoryTable: React.FC<RepositoryTableProps> = ({ searchParams }) => {
   const { data: searchResult, error, isLoading } = useSearchRepo(searchParams);
 
   /**
-   * Обработчик клика по строке таблицы
+   * Сортировка данных
+   * GitHub Search API не корректно сортирует по дате обновления и дате пуша,
+   * поэтому досортируем на клиенте для гарантированно порядка
+   */
+  const sortedItems = useMemo(() => {
+    if (!searchResult?.items) return [];
+
+    return sortRepositories(
+      searchResult.items,
+      searchParams.sort || 'stars',
+      searchParams.order || 'desc'
+    );
+  }, [searchResult?.items, searchParams.sort, searchParams.order]);
+
+  /**
+   * Обработчик клика по строке
    */
   const handleRowClick = useCallback(
     (repository: Repository) => {
@@ -154,9 +169,9 @@ const RepositoryTable: React.FC<RepositoryTableProps> = ({ searchParams }) => {
                 onSortChange={handleSortChange}
               />
               <TableBody>
-                {searchResult?.items.map((repository: Repository) => (
+                {sortedItems.map((repository: Repository) => (
                   <RepositoryRow
-                    key={repository.id} // уникален и не меняется во время сессии
+                    key={repository.id}
                     repository={repository}
                     onClick={handleRowClick}
                   />
