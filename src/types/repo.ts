@@ -30,6 +30,7 @@ export interface Repository {
   updated_at: string;
   owner: RepositoryOwner;
   license: RepositoryLicense | null;
+  topics: string[];
 }
 
 /**
