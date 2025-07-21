@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   Box,
-  Paper,
   Typography,
   Chip,
   CircularProgress,
@@ -15,10 +14,12 @@ import { formatNumber } from '../utils/helpers';
 import styles from './RepositoryDetails.module.scss';
 
 /**
- * Компонент отображения деталей репозитория
+ * Компонент отображения деталей
  */
 const RepositoryDetails: React.FC = () => {
   const { owner, repo } = useParams<{ owner: string; repo: string }>();
+  const [showAllTopics, setShowAllTopics] = useState(false);
+
   const {
     data: repository,
     error,
@@ -27,35 +28,35 @@ const RepositoryDetails: React.FC = () => {
 
   if (isLoading) {
     return (
-      <Paper className={styles.container}>
+      <div className={styles.container}>
         <Box className={styles.loadingContainer}>
           <CircularProgress size={32} />
           <Typography variant="body2" sx={{ mt: 1 }}>
             Загрузка...
           </Typography>
         </Box>
-      </Paper>
+      </div>
     );
   }
 
   if (error) {
     return (
-      <Paper className={styles.container}>
+      <div className={styles.container}>
         <Alert severity="error">Ошибка при загрузке репозитория</Alert>
-      </Paper>
+      </div>
     );
   }
 
   if (!repository) {
     return (
-      <Paper className={styles.container}>
+      <div className={styles.container}>
         <Alert severity="info">Репозиторий не найден</Alert>
-      </Paper>
+      </div>
     );
   }
 
   return (
-    <Paper className={styles.container}>
+    <div className={styles.container}>
       <Box className={styles.content}>
         {/* Заголовок */}
         <Box className={styles.header}>
@@ -82,24 +83,32 @@ const RepositoryDetails: React.FC = () => {
           )}
 
           {/* Топики из API */}
-          {repository.topics?.slice(0, 3).map((topic) => (
-            <Chip
-              key={topic}
-              label={topic}
-              size="small"
-              variant="outlined"
-              className={styles.tag}
-            />
-          ))}
+          {repository.topics && (
+            <>
+              {(showAllTopics
+                ? repository.topics
+                : repository.topics.slice(0, 2)
+              ).map((topic) => (
+                <Chip
+                  key={topic}
+                  label={topic}
+                  size="small"
+                  variant="outlined"
+                  className={styles.tag}
+                />
+              ))}
 
-          {/* Если топиков больше 3, показываем еще */}
-          {repository.topics && repository.topics.length > 3 && (
-            <Chip
-              label={`+${repository.topics.length - 3}`}
-              size="small"
-              variant="outlined"
-              className={styles.tag}
-            />
+              {repository.topics.length > 2 && !showAllTopics && (
+                <Chip
+                  label={`+${repository.topics.length - 2}`}
+                  size="small"
+                  variant="outlined"
+                  className={styles.expandTag}
+                  onClick={() => setShowAllTopics(true)}
+                  clickable
+                />
+              )}
+            </>
           )}
         </Box>
 
@@ -113,7 +122,7 @@ const RepositoryDetails: React.FC = () => {
           </Box>
         )}
       </Box>
-    </Paper>
+    </div>
   );
 };
 
