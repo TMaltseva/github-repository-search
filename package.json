@@ -1,10 +1,13 @@
 {
   "name": "github-repository-search",
+  "homepage": "https://TMaltseva.github.io/github-repository-search",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "type-check": "tsc --noEmit",
@@ -35,6 +38,7 @@
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.0",
+    "gh-pages": "^6.3.0",
     "prettier": "^2.8.0",
     "sass": "^1.69.5",
     "typescript": "^4.9.5"
