@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   TableHead,
   TableRow,
@@ -21,56 +21,75 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   searchParams,
   onSortChange
 }) => {
+  /**
+   * Обработчики сортировки для каждого поля
+   */
+  const handleForksSort = useCallback(
+    () => onSortChange('forks'),
+    [onSortChange]
+  );
+
+  const handleStarsSort = useCallback(
+    () => onSortChange('stars'),
+    [onSortChange]
+  );
+
+  const handleUpdatedSort = useCallback(
+    () => onSortChange('updated'),
+    [onSortChange]
+  );
+
   return (
     <TableHead>
       <TableRow>
+        {/* Название - без сортировки */}
         <TableCell>
           <Typography variant="subtitle2" component="span">
             Название
           </Typography>
         </TableCell>
 
-        {/* Язык */}
+        {/* Язык - без сортировки */}
         <TableCell>
           <Typography variant="subtitle2" component="span">
             Язык
           </Typography>
         </TableCell>
 
-        {/* Число форков */}
+        {/* Число форков - с сортировкой */}
         <TableCell align="center">
           <TableSortLabel
             active={searchParams.sort === 'forks'}
             direction={
               searchParams.sort === 'forks' ? searchParams.order : 'desc'
             }
-            onClick={() => onSortChange('forks')}
+            onClick={handleForksSort}
           >
             Число форков
           </TableSortLabel>
         </TableCell>
 
-        {/* Число звезд */}
+        {/* Число звезд - с сортировкой */}
         <TableCell align="center">
           <TableSortLabel
             active={searchParams.sort === 'stars'}
             direction={
               searchParams.sort === 'stars' ? searchParams.order : 'desc'
             }
-            onClick={() => onSortChange('stars')}
+            onClick={handleStarsSort}
           >
             Число звезд
           </TableSortLabel>
         </TableCell>
 
-        {/* Дата обновления */}
+        {/* Дата обновления - с сортировкой */}
         <TableCell align="center">
           <TableSortLabel
             active={searchParams.sort === 'updated'}
             direction={
               searchParams.sort === 'updated' ? searchParams.order : 'desc'
             }
-            onClick={() => onSortChange('updated')}
+            onClick={handleUpdatedSort}
           >
             Дата обновления
           </TableSortLabel>

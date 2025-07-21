@@ -71,7 +71,7 @@ const RepositoryTable: React.FC<RepositoryTableProps> = ({ searchParams }) => {
    * Обработчик изменения страницы
    */
   const handlePageChange = useCallback(
-    (_event: React.ChangeEvent<unknown>, page: number) => {
+    (page: number) => {
       const newParams = new URLSearchParams(urlSearchParams);
       newParams.set('page', page.toString());
       setUrlSearchParams(newParams);

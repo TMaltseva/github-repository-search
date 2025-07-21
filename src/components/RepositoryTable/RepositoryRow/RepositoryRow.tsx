@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { TableRow, TableCell, Typography, Chip, Box } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import { formatDate, formatNumber } from '../../../utils/helpers';
@@ -18,18 +18,26 @@ const RepositoryRow: React.FC<RepositoryRowProps> = ({
   repository,
   onClick
 }) => {
+  const handleClick = useCallback(() => {
+    onClick(repository);
+  }, [onClick, repository]);
+
   return (
     <TableRow
       hover
       className={styles.tableRow}
-      onClick={() => onClick(repository)}
+      onClick={handleClick}
+      role="button"
+      tabIndex={0}
     >
+      {/* Название репозитория */}
       <TableCell>
         <Typography variant="body2" className={styles.repoName}>
           {repository.name}
         </Typography>
       </TableCell>
 
+      {/* Язык программирования */}
       <TableCell>
         {repository.language && (
           <Chip
@@ -41,12 +49,14 @@ const RepositoryRow: React.FC<RepositoryRowProps> = ({
         )}
       </TableCell>
 
+      {/* Количество форков */}
       <TableCell align="center">
         <Typography variant="body2">
           {formatNumber(repository.forks_count)}
         </Typography>
       </TableCell>
 
+      {/* Количество звезд */}
       <TableCell align="center">
         <Box className={styles.starsCell}>
           <StarIcon className={styles.starIcon} />
@@ -56,6 +66,7 @@ const RepositoryRow: React.FC<RepositoryRowProps> = ({
         </Box>
       </TableCell>
 
+      {/* Дата последнего обновления */}
       <TableCell align="center">
         <Typography variant="body2">
           {formatDate(repository.updated_at)}

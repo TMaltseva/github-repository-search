@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   Box,
@@ -25,6 +25,10 @@ const RepositoryDetails: React.FC = () => {
     error,
     isLoading
   } = useRepo(owner || '', repo || '');
+
+  const handleShowAllTopics = useCallback(() => {
+    setShowAllTopics(true);
+  }, []);
 
   if (isLoading) {
     return (
@@ -104,7 +108,7 @@ const RepositoryDetails: React.FC = () => {
                   size="small"
                   variant="outlined"
                   className={styles.expandTag}
-                  onClick={() => setShowAllTopics(true)}
+                  onClick={handleShowAllTopics}
                   clickable
                 />
               )}
