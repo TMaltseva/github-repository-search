@@ -1,5 +1,5 @@
 import { createApiError } from './apiErrors';
-import { ERROR_MESSAGES } from '@/configs/constants';
+import { ERROR_MESSAGES } from '../configs/constants';
 
 /**
  * Функция для выполнения HTTP запросов
