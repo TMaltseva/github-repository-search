@@ -8,7 +8,7 @@ import {
   GITHUB_API_URL,
   DEFAULT_PER_PAGE,
   DEFAULT_RETRY_INTERVAL
-} from '@/configs/constants';
+} from '../configs/constants';
 import { fetcher } from './fetcher';
 
 export interface SearchParams {
@@ -16,7 +16,7 @@ export interface SearchParams {
   sort?: SortOption; // Параметр сортировки
   order?: SortDirection; // Направление сортировки
   page?: number; // Номер страницы
-  per_page?: number; // Количество элементов на странице
+  per_page?: number; // Элементов на странице
 }
 
 /**
