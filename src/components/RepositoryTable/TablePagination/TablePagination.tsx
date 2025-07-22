@@ -37,12 +37,13 @@ const TablePagination: React.FC<TablePaginationProps> = ({
   onPerPageChange,
   isLoading
 }) => {
-  // Вычисляет диапазон отображаемых записей для текущей страницы
-  const currentStart = (searchParams.page! - 1) * searchParams.per_page! + 1;
-  const currentEnd = Math.min(
-    searchParams.page! * searchParams.per_page!,
-    totalCount
-  );
+  // Обработка случая с нулевыми результатами
+  const safeCurrentStart =
+    totalCount > 0 ? (searchParams.page! - 1) * searchParams.per_page! + 1 : 0;
+  const safeCurrentEnd =
+    totalCount > 0
+      ? Math.min(searchParams.page! * searchParams.per_page!, totalCount)
+      : 0;
 
   /**
    * Обработчик перехода на предыдущую страницу
@@ -82,7 +83,7 @@ const TablePagination: React.FC<TablePaginationProps> = ({
         <FormControl size="small" className={styles.perPageSelect}>
           <Select
             value={searchParams.per_page}
-            onChange={onPerPageChange} // При изменении сбрасывается на page=1
+            onChange={onPerPageChange}
             variant="outlined"
             disabled={isLoading}
           >
@@ -93,9 +94,9 @@ const TablePagination: React.FC<TablePaginationProps> = ({
         </FormControl>
 
         <Typography variant="body2" className={styles.paginationText}>
-          {`${currentStart}-${currentEnd} of ${Math.min(
+          {`${safeCurrentStart}-${safeCurrentEnd} of ${Math.min(
             totalCount,
-            MAX_API_RESULTS // Максимум 1000
+            MAX_API_RESULTS
           )}`}
         </Typography>
       </Box>
@@ -106,6 +107,7 @@ const TablePagination: React.FC<TablePaginationProps> = ({
           disabled={!canGoPrev || isLoading}
           size="small"
           className={styles.paginationButton}
+          aria-label="Previous page"
         >
           <ChevronLeft />
         </IconButton>
@@ -115,6 +117,7 @@ const TablePagination: React.FC<TablePaginationProps> = ({
           disabled={!canGoNext || isLoading}
           size="small"
           className={styles.paginationButton}
+          aria-label="Next page"
         >
           <ChevronRight />
         </IconButton>
