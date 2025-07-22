@@ -28,11 +28,20 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitOverride": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "types": ["jest", "node", "@testing-library/jest-dom"]
   },
   "include": [
     "src",
     "src/types",
-    "src/types/**/*.d.ts"
+    "src/types/**/*.d.ts",
+    "__tests__/**/*",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "src/setupTests.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "build"
   ]
 }
