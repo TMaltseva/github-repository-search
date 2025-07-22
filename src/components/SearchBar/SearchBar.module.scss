@@ -23,6 +23,13 @@
       background-color: $white;
       box-shadow: $shadow-md;
     }
+
+    &::placeholder {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
+    }
   }
 
   :global(.MuiOutlinedInput-root) {
